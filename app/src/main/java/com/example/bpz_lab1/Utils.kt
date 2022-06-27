@@ -3,6 +3,7 @@ package com.example.bpz_lab1
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -46,4 +47,8 @@ fun Bitmap.toUrl(context: Context): Uri {
     fileOutputStream.flush()
     fileOutputStream.close()
     return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", f)
+}
+
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

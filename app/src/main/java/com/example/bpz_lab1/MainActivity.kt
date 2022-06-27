@@ -12,12 +12,10 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.appbar.MaterialToolbar
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
 
     val observable = Observable.Base()
     val timer = Timer()
-    lateinit var sharedPrefs: Prefs
 
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentViewCreated(
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        sharedPrefs = Prefs(this)
 
         if (savedInstanceState == null) {
             setSupportActionBar(findViewById(R.id.toolbar))
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        if (!sharedPrefs.getIsActivated()) {
+        if (!(application as App).sharedPrefs.getIsActivated()) {
             timer.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() = runOnUiThread {
                     observable.notifyObservers()
